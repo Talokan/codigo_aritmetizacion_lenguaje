@@ -9,7 +9,7 @@ def RecibirLista():
     lista = []
     salida = 0
     while(salida!=-1):
-        salida = int(input("Introduzca el símbolo de la fórmula o bien teclee -1 para salir: "))
+        salida = int(input("Introduzca el símbolo de la fórmula o bien teclee -1 para salir: "))#Recibe los símbolos de la fórmula
         lista.append(salida)
     del lista[-1]
     return lista  
@@ -17,15 +17,15 @@ def RecibirLista():
 def verificacionSimbolosAdecuados(lista):
     for elemento in lista:
         i = elemento
-        if(i%2==0 or i<3):
+        if(i%2==0 or i<3): #Los elementos de la lista deben ser impares mayores o iguales a 3
             return False
     return True    
 
 def obtenerAridadesTerminos(lista):
     listaSinRepeticiones = []
     aridades = []
-    if(verificacionSimbolosAdecuados(lista)):
-        for elemento in lista:
+    if(verificacionSimbolosAdecuados(lista)): #Si se verifica que los símbolos son adecuados
+        for elemento in lista: 
             if(not(elemento in listaSinRepeticiones)):
                 listaSinRepeticiones.append(elemento)
         for elemento in listaSinRepeticiones:
@@ -34,71 +34,48 @@ def obtenerAridadesTerminos(lista):
                 j = int(input("Introduzca la aridad del término %d: " %((i-27)/8)))
                 aridades.append([int((i-27)/8),j])
     return aridades    
-
-def obtenerAridadesTerminosYUnaRelacion(lista):
-    listaSinRepeticiones = []
-    aridades = []
-    if(verificacionSimbolosAdecuados(lista)):
-        for elemento in lista:
-            if(not(elemento in listaSinRepeticiones)):
-                listaSinRepeticiones.append(elemento)
-        for elemento in listaSinRepeticiones:
-            i = elemento
-            if(funcionalTermino(i)):
-                j = int(input("Introduzca la aridad del término %d: " %((i-27)/8)))
-                aridades.append([0,int((i-27)/8),j])
-            elif(relacionalTermino(i)):
-                j = int(input("Introduzca la aridad de la relación %d: " %((i-29)/8)))
-                aridades.append([1,int((i-29)/8),j])
-    return aridades    
                 
 def variableTermino(num: int): #Función que verifica si un número corresponde a un símbolo variable, tipo de retorno bool
-    if((num-19)>=0 and (num-23)%8==0):
+    if((num-23)>=0 and (num-23)%8==0):
         return True
     else:
         return False
     
 def constanteTermino(num: int): #Función que verifica si un número corresponde a un símbolo constante, tipo de retorno bool
-    if((num-21)>=0 and (num-25)%8==0):
+    if((num-25)>=0 and (num-25)%8==0):
         return True
     else:
         return False    
     
 def funcionalTermino(num: int): #Función que verifica si un número corresponde a un símbolo funcional, tipo de retorno bool
-    if((num-23)>=0 and (num-27)%8==0):
+    if((num-27)>=0 and (num-27)%8==0):
         return True
     else:
         return False  
 
-def relacionalTermino(num: int): #Función que verifica si un número corresponde a un símbolo relacional, tipo de retorno bool
-    if((num-25)>=0 and (num-29)%8==0):
-        return True
-    else:
-        return False        
-    
-#Verificar posibles impresiciones con este algoitmo
+#Verificar posibles imprecisiones con este algoitmo
 def copiarArregloAPartirDeIndiceDado(lista, posicion: int): #Esta función copia lo que se encuentra entre paréntesis a partir de una posición dada en un arreglo dado (la posición supondremos que se trata de la posición del paréntesis más a la derecha)
      copia = [] #Inicia una lista vacía
-     j = 0
+     j = 0 #Cuenta los términos verificados entre dos paréntesis
      k = 0 #Contador que se mueve entre paréntesis y que respecto a éste indice se añaden elementos significativos a la copia
-     while(lista[posicion]!=3): #Se va a idenificar el primer paréntesis
+     while(lista[posicion]!=3): #Se va a idenificar el primer paréntesis que siempre existe ya que definiremos si al menos uno se encuentra se accede a esta función
          posicion  = posicion - 1
          
      posicion = posicion + 1 #Se coloca adelante de dicho paréntesis
      while(lista[posicion]!=5): 
-         if(lista[posicion]==-1 and lista[posicion+1]==-2):
+         if(lista[posicion]==-1 and lista[posicion+1]==-2): #Lo que se encuentra entre -1 es un término  verificado, con -2 se cancela su paréntesis izquierdo
              while True:
                  posicion = posicion + 1
-                 if(lista[posicion]==-1 and lista[posicion+1]!=-2 and j==0):
+                 if(lista[posicion]==-1 and lista[posicion+1]!=-2 and j==0): 
                      break
                  elif(lista[posicion]==-1 and lista[posicion+1]==-2):
-                     j = j + 1
-                 elif(lista[posicion]==-1 and lista[posicion+1]!=-2 and j>0):
-                     j = j - 1
+                     j = j + 1 #Se cuenta un término si hay una pareja -1, -2 que representa a un término cancelado
+                 elif(lista[posicion]==-1 and lista[posicion+1]!=-2 and j>0): #Si se encuentra un -1 y no sigue un -2 entonces nos encontramos en la cancelación de un paréntesis derecho 
+                     j = j - 1 
          copia.insert(k,lista[posicion])  #Si encuentra un -1 (asterisco) lo copia ya que es un elemento que está reconocido como término). En otro caso si se trata de cualquier otro símbolo lo copia
          k = k + 1 #Se mueve una posición a la derecha sobre la lista "copia" y busca más elementos significativos
          posicion = posicion + 1
-     return copia # Regresa la todo los que se encuentra entre dos paaréntesis de la lista original
+     return copia # Regresa la todo los que se encuentra entre dos paréntesis de la lista original
 
 def verificarArregloEsTermino(lista, aridad: int): #Esta función verifica que todo lo que se encuentra  entre dos paréntesis corresponde en efecto a un término
     k = 0 #Es un contador que va verificando sobre los elementos del arreglo si son como deben ser
@@ -190,7 +167,7 @@ def verificacionQueListaEsLTermino(lista, aridades):
                         print("No se pudo cancelar todo contadorAridades.")
                         return False
                     elif(contadorAridades==[] and lista[-1]!=-1):
-                            print("Fallo ya que aunque contadorAridades es vacío aún quedan elementos en la lista que son parétesis derechos.")
+                            print("Fallo ya que aunque contadorAridades es vacío aún quedan elementos en la lista que son paréntesis derechos.")
                             return False
             else:
                 print("Fallo que el símbolo inicial del término correspondiera al de un funcional.")
@@ -200,11 +177,10 @@ def verificacionQueListaEsLTermino(lista, aridades):
         return False
     
 lista = RecibirLista()  
-aridades = obtenerAridadesTerminosYUnaRelacion(lista) 
+aridades = obtenerAridadesTerminos(lista) 
 if(verificacionSimbolosAdecuados):
     print(verificacionQueListaEsLTermino(lista, aridades))
 else:
     print("No son los símbolos que corresponden. Deben ser impares mayores o iguales a 3.")
     print(False)
-    
         

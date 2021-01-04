@@ -1,9 +1,7 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Wed Sep 11 13:14:44 2019
 
-@author: fernando
-"""
+
+#Programa en Python que determina si una secuencia de números naturales corresponde a la codificación de una fórmula literal
+
 
 def RecibirLista(): #Recibe la lista que se va a verificar
     lista = []

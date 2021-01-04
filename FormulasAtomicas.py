@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Wed Sep 11 13:14:44 2019
-
-@author: fernando
-"""
-
 def RecibirLista(): #Recibe la lista que se va a verificar
     lista = []
     salida = 0
@@ -34,7 +27,7 @@ def obtenerAridadesTerminosYUnaRelacion(lista): #Obtiene aridades de los termino
                 j = int(input("Introduzca la aridad del término %d: " %((i-27)/8)))
                 aridades.append([0,int((i-27)/8),j])
             elif(relacionalTermino(i)):
-                j = int(input("Introduzca la aridad de la relación %d: " %((i-25)/8)))
+                j = int(input("Introduzca la aridad de la relación %d: " %((i-29)/8)))
                 aridades.append([1,int((i-29)/8),j])
     return aridades    
                 

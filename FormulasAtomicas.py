@@ -5,7 +5,7 @@ Created on Wed Sep 11 13:14:44 2019
 @author: fernando
 """
 
-def RecibirLista():
+def RecibirLista(): #Recibe la lista que se va a verificar
     lista = []
     salida = 0
     while(salida!=-1):
@@ -17,25 +17,11 @@ def RecibirLista():
 def verificacionSimbolosAdecuados(lista):
     for elemento in lista:
         i = elemento
-        if(i%2==0 or i<3):
+        if(i%2==0 or i<3): #Verificamos que los elementos de la lista sean mayores o iguales que 3 e impares
             return False
     return True    
 
-def obtenerAridadesTerminos(lista):
-    listaSinRepeticiones = []
-    aridades = []
-    if(verificacionSimbolosAdecuados(lista)):
-        for elemento in lista:
-            if(not(elemento in listaSinRepeticiones)):
-                listaSinRepeticiones.append(elemento)
-        for elemento in listaSinRepeticiones:
-            i = elemento
-            if(funcionalTermino(i)):
-                j = int(input("Introduzca la aridad del término %d: " %((i-27)/8)))
-                aridades.append([int((i-27)/8),j])
-    return aridades    
-
-def obtenerAridadesTerminosYUnaRelacion(lista):
+def obtenerAridadesTerminosYUnaRelacion(lista): #Obtiene aridades de los terminos y de una sola relación
     listaSinRepeticiones = []
     aridades = []
     if(verificacionSimbolosAdecuados(lista)):
@@ -76,31 +62,29 @@ def relacionalTermino(num: int): #Función que verifica si un número correspond
     else:
         return False        
     
-#Verificar posibles impresiciones con este algoitmo
 def copiarArregloAPartirDeIndiceDado(lista, posicion: int): #Esta función copia lo que se encuentra entre paréntesis a partir de una posición dada en un arreglo dado (la posición supondremos que se trata de la posición del paréntesis más a la derecha)
      copia = [] #Inicia una lista vacía
      j = 0
      k = 0 #Contador que se mueve entre paréntesis y que respecto a éste indice se añaden elementos significativos a la copia
-     while(lista[posicion]!=3): #Se va a idenificar el primer paréntesis
+     while(lista[posicion]!=3): #Se va a identificar el primer paréntesis
          posicion  = posicion - 1
-         
      posicion = posicion + 1 #Se coloca adelante de dicho paréntesis
      while(lista[posicion]!=5): 
-         if(lista[posicion]==-1 and lista[posicion+1]==-2):
+         if(lista[posicion]==-1 and lista[posicion+1]==-2): #Si se verifica que en la lista hay un -1 y después un -2 entonces está ante una estructura de tipo funcional/cancelado y paréntesis
              while True:
                  posicion = posicion + 1
-                 if(lista[posicion]==-1 and lista[posicion+1]!=-2 and j==0):
+                 if(lista[posicion]==-1 and lista[posicion+1]!=-2 and j==0): #Cuando haya verificado la funcional/cancelado y paréntesis ... paréntesis se termina
                      break
-                 elif(lista[posicion]==-1 and lista[posicion+1]==-2):
+                 elif(lista[posicion]==-1 and lista[posicion+1]==-2): #Cuando encuentre una estructura funcional/cancelado y paréntesis suma uno al contador de dichas estructuras
                      j = j + 1
-                 elif(lista[posicion]==-1 and lista[posicion+1]!=-2 and j>0):
+                 elif(lista[posicion]==-1 and lista[posicion+1]!=-2 and j>0): #Cuando encuentre una estructura paréntesis resta uno al contador de dichas estructuras
                      j = j - 1
          copia.insert(k,lista[posicion])  #Si encuentra un -1 (asterisco) lo copia ya que es un elemento que está reconocido como término). En otro caso si se trata de cualquier otro símbolo lo copia
          k = k + 1 #Se mueve una posición a la derecha sobre la lista "copia" y busca más elementos significativos
          posicion = posicion + 1
-     return copia # Regresa la todo los que se encuentra entre dos paaréntesis de la lista original
+     return copia # Regresa todo los que se encuentra entre dos paréntesis de la lista original haciendo la cancelación de términos verificados colocando un único -1
 
-def verificarArregloEsTermino(lista, aridad: int): #Esta función verifica que todo lo que se encuentra  entre dos paréntesis corresponde en efecto a un término
+def verificarArregloEsTermino(lista, aridad: int): #Esta función verifica que todo lo que se encuentra entre dos paréntesis corresponde en efecto a un término
     k = 0 #Es un contador que va verificando sobre los elementos del arreglo si son como deben ser
     comas = 0 #Contador de comas
     if(len(lista)>0 and len(lista)%2==1): #Verifica si la lista original tiene al menos un elemento, en caso contrario se regresa 0 y también que exista un número impar de dichos elementos pues por cada término debe haber una coma y un término al final

@@ -1,5 +1,6 @@
 
 
+#Programa en Python que determina si una secuencia de números naturales corresponde a la codificación de una fórmula atómica
 
 
 def RecibirLista(): #Recibe la lista que se va a verificar

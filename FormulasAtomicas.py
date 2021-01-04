@@ -1,3 +1,7 @@
+
+
+
+
 def RecibirLista(): #Recibe la lista que se va a verificar
     lista = []
     salida = 0
